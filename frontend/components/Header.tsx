@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 const navItems = [
   { label: "ホーム", href: "/" },
@@ -53,6 +53,7 @@ const Header = () => {
           aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen((prev) => !prev)}
         >
+          {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
           <svg
             className="h-5 w-5"
             viewBox="0 0 24 24"
