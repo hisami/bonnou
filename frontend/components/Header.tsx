@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState } from "react";
+import Link from "next/link";
 
 const navItems = [
-  { label: 'ホーム', href: '/' },
-  { label: '機能', href: '/features' },
-  { label: '料金', href: '/pricing' },
-  { label: 'お問い合わせ', href: '/contact' },
+  { label: "ホーム", href: "/" },
+  { label: "機能", href: "/features" },
+  { label: "料金", href: "/pricing" },
+  { label: "お問い合わせ", href: "/contact" },
 ];
 
 const Header = () => {
@@ -16,11 +16,16 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-white/85 backdrop-blur-md shadow-sm dark:bg-neutral-950/75">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight sm:text-xl">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-lg font-semibold tracking-tight sm:text-xl"
+        >
           <span className="rounded-md bg-gradient-to-r from-emerald-400 via-blue-500 to-indigo-500 px-2 py-1 text-xs font-bold uppercase text-white sm:text-sm">
             Bonnou
           </span>
-          <span className="hidden text-neutral-800 dark:text-neutral-100 sm:inline">Mindful Productivity</span>
+          <span className="hidden text-neutral-800 dark:text-neutral-100 sm:inline">
+            Mindful Productivity
+          </span>
         </Link>
 
         <div className="hidden items-center gap-10 md:flex">
