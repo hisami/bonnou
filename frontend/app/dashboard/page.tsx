@@ -45,8 +45,13 @@ const initialDailyMetrics = {
 const moodOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 const dailyStartPrompts = [
-	"自己肯定感を高める自己イメージやその日の意気込みを記録",
-	"実現したい状態を一言で表す",
+	"自己肯定感を高める自己イメージやその日の意気込みを記録しましょう",
+	"実現したい状態を一言で表してみましょう",
+];
+
+const reflectionHints = [
+	"何気ない日常からも感謝できることを見つけてみましょう",
+	"小さな成功体験を積み重ねて自己肯定感を育てましょう",
 ];
 
 const recentBonnou = [
@@ -210,6 +215,14 @@ export default function DashboardPage() {
 							<label htmlFor="daily-comment" className={styles.formLabel}>
 								今日のひとこと
 							</label>
+							<ul className={styles.checkList}>
+								{dailyStartPrompts.map((prompt) => (
+									<li key={prompt} className={styles.checkItem}>
+										<span className={styles.goalDot} />
+										<span>{prompt}</span>
+									</li>
+								))}
+							</ul>
 							<textarea
 								name="daily-comment"
 								className={styles.textarea}
@@ -222,14 +235,6 @@ export default function DashboardPage() {
 								</button>
 							</div>
 						</form>
-						<ul className={styles.checkList}>
-							{dailyStartPrompts.map((prompt) => (
-								<li key={prompt} className={styles.checkItem}>
-									<span className={styles.goalDot} />
-									<span>{prompt}</span>
-								</li>
-							))}
-						</ul>
 					</article>
 				</section>
 
@@ -283,12 +288,20 @@ export default function DashboardPage() {
 						<header className={styles.cardHeader}>
 							<h2 className={styles.cardTitle}>日次振り返り</h2>
 							<button type="button" className={styles.ghostButton}>
-								過去の記録を見る
+								過去の振り返りを見る
 							</button>
 						</header>
 						<p className={styles.helperText}>
 							1日の終わりによかったことや感謝すべきことを記録して（3つが目安）、余韻を味わいましょう。
 						</p>
+						<ul className={styles.checkList}>
+							{reflectionHints.map((hint) => (
+								<li key={hint} className={styles.checkItem}>
+									<span className={styles.goalDot} />
+									<span>{hint}</span>
+								</li>
+							))}
+						</ul>
 						<ul className={styles.gratitudeList}>
 							{gratitudeItems.map((item) => (
 								<li
@@ -312,25 +325,10 @@ export default function DashboardPage() {
 							/>
 							<div className={styles.formActions}>
 								<button type="submit" className={styles.primaryButton}>
-									登録する
+									振り返りを登録
 								</button>
 							</div>
 						</form>
-					</div>
-
-					<div className={styles.card}>
-						<h2 className={styles.cardTitle}>振り返りヒント</h2>
-						<ol className={styles.hintList}>
-							<li className={styles.hintItem}>
-								今日のエネルギーを高めた要因は何でしたか？
-							</li>
-							<li className={styles.hintItem}>
-								スコアが下がったタイミングで感じたことを1つ書き出してみましょう。
-							</li>
-							<li className={styles.hintItem}>
-								明日の自分に伝えたいサポートメッセージは？
-							</li>
-						</ol>
 					</div>
 
 					<div className={styles.card}>
@@ -338,15 +336,15 @@ export default function DashboardPage() {
 							<div>
 								<h2 className={styles.cardTitle}>名言ライブラリ</h2>
 								<p className={styles.cardSubtitle}>
-									自分で登録した言葉と、毎日届くおすすめをストックしましょう。
+									心に響く名言をストックしましょう。
 								</p>
 							</div>
-							<button type="button" className={styles.secondaryButton}>
-								サンプルを受け取る
+							<button type="button" className={styles.ghostButton}>
+								全ての名言を見る
 							</button>
 						</header>
 						<section className={styles.quoteSection}>
-							<h3 className={styles.sectionLabel}>自分で登録した言葉</h3>
+							<h3 className={styles.sectionLabel}>登録した名言（最新3件）</h3>
 							<ul className={styles.quoteList}>
 								{personalQuotes.map((quote) => (
 									<li
@@ -360,7 +358,7 @@ export default function DashboardPage() {
 									</li>
 								))}
 							</ul>
-							<form className={styles.entryForm}>
+							{/* <form className={styles.entryForm}>
 								<label htmlFor="my-quote" className={styles.formLabel}>
 									名言を追加
 								</label>
@@ -377,18 +375,7 @@ export default function DashboardPage() {
 								<button type="submit" className={styles.primaryButton}>
 									名言を登録
 								</button>
-							</form>
-						</section>
-						<section className={styles.quoteSection}>
-							<h3 className={styles.sectionLabel}>自動で届くおすすめ</h3>
-							<ul className={styles.quoteList}>
-								{curatedQuotes.map((quote) => (
-									<li key={quote.text} className={styles.quoteItem}>
-										<p className={styles.quoteText}>“{quote.text}”</p>
-										<span className={styles.quoteMeta}>{quote.author}</span>
-									</li>
-								))}
-							</ul>
+							</form> */}
 						</section>
 					</div>
 				</section>
