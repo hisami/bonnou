@@ -15,6 +15,31 @@ const mockStats = [
 	{ label: "アクション成功率", value: "68%", trend: "過去7日" },
 ];
 
+const longTermGoals = [
+	{
+		vision: "2025年12月までに『集中できる自分』を体現する",
+		pillars: [
+			"朝活のスタート時間を毎日固定する",
+			"集中ブロック前の3分儀式を整える",
+			"1日の終わりに『できたこと』を3つ記録する",
+		],
+	},
+];
+
+const personalMotto = {
+	text: "できた理由を書き出すことで『できる自分』を証明できる",
+	dailyReminders: [
+		"今日の『できた』を1行メモ",
+		"根拠になる行動をセットで書く",
+		"夜の振り返りで再読する",
+	],
+};
+
+const dailyStartPrompts = [
+	"自己肯定感を高める自己イメージやその日の意気込みを記録",
+	"実現したい状態を一言で表す",
+];
+
 const recentBonnou = [
 	{
 		title: "SNSへ気を取られる",
@@ -36,12 +61,40 @@ const recentBonnou = [
 	},
 ];
 
-const gratitudeItems = ["早起きできた", "同僚のサポート", "天気が良かった"];
+const gratitudeItems = [
+	{ text: "早起きできた", moment: "朝", loggedAt: "06:35" },
+	{ text: "同僚のサポート", moment: "昼", loggedAt: "13:10" },
+	{ text: "天気が良かった", moment: "夕", loggedAt: "18:45" },
+];
 
 const upcomingActions = [
 	{ title: "昼食後に散歩10分", time: "12:30", tag: "リフレッシュ" },
 	{ title: "午後の集中ブロック", time: "14:00", tag: "集中" },
 	{ title: "夜の瞑想30分", time: "21:30", tag: "マインドフル" },
+];
+
+const personalQuotes = [
+	{
+		text: "小さな前進の積み重ねが自己肯定感の器を育てる",
+		source: "自分メモ",
+		loggedAt: "2025-09-27",
+	},
+	{
+		text: "習慣が人格をつくる。まずトリガーを整える",
+		source: "朝活ジャーナル",
+		loggedAt: "2025-09-25",
+	},
+];
+
+const curatedQuotes = [
+	{
+		text: "成功とは日々繰り返される小さな努力の総和である",
+		author: "ロバート・コリアー",
+	},
+	{
+		text: "未来を予測する最善の方法は、それを創ることだ",
+		author: "ピーター・ドラッカー",
+	},
 ];
 
 export default function DashboardPage() {
@@ -52,18 +105,88 @@ export default function DashboardPage() {
 				<section className={styles.hero}>
 					<h1 className={styles.heroTitle}>{today}のダッシュボード</h1>
 					<p className={styles.heroCopy}>
-						デイリースタートコメントを記載して、今日の自己イメージを高めましょう。
+						長期目標と座右の銘を確認して、今日のデイリースタートコメントにつなげましょう。
 					</p>
 				</section>
 
-				<section className={styles.statsGrid}>
-					{mockStats.map((stat) => (
-						<div key={stat.label} className={styles.statCard}>
-							<p className={styles.statLabel}>{stat.label}</p>
-							<p className={styles.statValue}>{stat.value}</p>
-							<p className={styles.statTrend}>{stat.trend}</p>
-						</div>
+				<section className={styles.topGrid}>
+					{longTermGoals.map((goal) => (
+						<article
+							key={goal.vision}
+							className={`${styles.card} ${styles.longTermCard}`}
+						>
+							<header className={styles.cardHeader}>
+								<div>
+									<h2 className={styles.cardTitle}>長期目標</h2>
+								</div>
+								<button type="button" className={styles.secondaryButton}>
+									編集する
+								</button>
+							</header>
+							<p className={styles.goalVision}>{goal.vision}</p>
+							<ul className={styles.goalList}>
+								{goal.pillars.map((pillar) => (
+									<li key={pillar} className={styles.goalItem}>
+										<span className={styles.goalDot} />
+										<span>{pillar}</span>
+									</li>
+								))}
+							</ul>
+						</article>
 					))}
+
+					<article className={`${styles.card} ${styles.mottoCard}`}>
+						<header className={styles.cardHeader}>
+							<div>
+								<h2 className={styles.cardTitle}>座右の銘</h2>
+							</div>
+							<button type="button" className={styles.secondaryButton}>
+								編集する
+							</button>
+						</header>
+						<p className={styles.mottoQuote}>{personalMotto.text}</p>
+					</article>
+				</section>
+
+				<section className={styles.dailyStartSection}>
+					<article className={`${styles.card} ${styles.dailyStartCard}`}>
+						<header className={styles.cardHeader}>
+							<div>
+								<h2 className={styles.cardTitle}>デイリースタートコメント</h2>
+								<p className={styles.cardSubtitle}>
+									長期目標と座右の銘から得たエネルギーを言葉に落とし込みましょう。
+								</p>
+							</div>
+							<span className={styles.helperText}>最終更新 09:02</span>
+						</header>
+						<form className={styles.entryForm}>
+							<label htmlFor="daily-comment" className={styles.formLabel}>
+								今日のひとこと
+							</label>
+							<textarea
+								name="daily-comment"
+								className={styles.textarea}
+								placeholder="例: 『集中力に自信がある自分で、午前中のコアタスクをやり切る』"
+								rows={4}
+							/>
+							<div className={styles.formActions}>
+								<button type="submit" className={styles.primaryButton}>
+									コメントを登録
+								</button>
+								<button type="button" className={styles.secondaryButton}>
+									テンプレートを見る
+								</button>
+							</div>
+						</form>
+						<ul className={styles.checkList}>
+							{dailyStartPrompts.map((prompt) => (
+								<li key={prompt} className={styles.checkItem}>
+									<span className={styles.goalDot} />
+									<span>{prompt}</span>
+								</li>
+							))}
+						</ul>
+					</article>
 				</section>
 
 				<section className={styles.primaryGrid}>
@@ -115,15 +238,46 @@ export default function DashboardPage() {
 						</div>
 
 						<div className={styles.card}>
-							<h2 className={styles.cardTitle}>感謝のリスト</h2>
-							<ul className={styles.bulletList}>
+							<h2 className={styles.cardTitle}>日次振り返り: 感謝ログ</h2>
+							<p className={styles.helperText}>
+								1日の終わりに「ありがたい出来事」を3つ記録して、余韻を味わいましょう。
+							</p>
+							<ul className={styles.gratitudeList}>
 								{gratitudeItems.map((item) => (
-									<li key={item} className={styles.bulletItem}>
-										<span className={styles.bulletDot} />
-										<span>{item}</span>
+									<li
+										key={`${item.text}-${item.loggedAt}`}
+										className={styles.gratitudeItem}
+									>
+										<div>
+											<p className={styles.gratitudeText}>{item.text}</p>
+											<span className={styles.gratitudeMeta}>
+												{item.moment}・記録 {item.loggedAt}
+											</span>
+										</div>
+										<button type="button" className={styles.tagButton}>
+											タグ整理
+										</button>
 									</li>
 								))}
 							</ul>
+							<form className={styles.entryForm}>
+								<label htmlFor="gratitude" className={styles.formLabel}>
+									感謝を追加
+								</label>
+								<input
+									type="text"
+									className={styles.input}
+									placeholder="例: 家族との朝ごはんが楽しかった"
+								/>
+								<div className={styles.formActions}>
+									<button type="submit" className={styles.primaryButton}>
+										登録する
+									</button>
+									<button type="button" className={styles.secondaryButton}>
+										過去の記録を見る
+									</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</section>
@@ -163,6 +317,91 @@ export default function DashboardPage() {
 							</li>
 						</ol>
 					</div>
+
+					<div className={styles.card}>
+						<header className={styles.cardHeader}>
+							<div>
+								<h2 className={styles.cardTitle}>名言ライブラリ</h2>
+								<p className={styles.cardSubtitle}>
+									自分で登録した言葉と、毎日届くおすすめをストックしましょう。
+								</p>
+							</div>
+							<button type="button" className={styles.secondaryButton}>
+								サンプルを受け取る
+							</button>
+						</header>
+						<section className={styles.quoteSection}>
+							<h3 className={styles.sectionLabel}>自分で登録した言葉</h3>
+							<ul className={styles.quoteList}>
+								{personalQuotes.map((quote) => (
+									<li
+										key={`${quote.text}-${quote.loggedAt}`}
+										className={styles.quoteItem}
+									>
+										<p className={styles.quoteText}>“{quote.text}”</p>
+										<span className={styles.quoteMeta}>
+											{quote.source}・記録 {quote.loggedAt}
+										</span>
+									</li>
+								))}
+							</ul>
+							<form className={styles.entryForm}>
+								<label htmlFor="my-quote" className={styles.formLabel}>
+									名言を追加
+								</label>
+								<input
+									type="text"
+									className={styles.input}
+									placeholder="例: 習慣が人格をつくる"
+								/>
+								<input
+									type="text"
+									className={styles.input}
+									placeholder="出典・誰の言葉か"
+								/>
+								<button type="submit" className={styles.primaryButton}>
+									名言を登録
+								</button>
+							</form>
+						</section>
+						<section className={styles.quoteSection}>
+							<h3 className={styles.sectionLabel}>自動で届くおすすめ</h3>
+							<ul className={styles.quoteList}>
+								{curatedQuotes.map((quote) => (
+									<li key={quote.text} className={styles.quoteItem}>
+										<p className={styles.quoteText}>“{quote.text}”</p>
+										<span className={styles.quoteMeta}>{quote.author}</span>
+									</li>
+								))}
+							</ul>
+						</section>
+					</div>
+				</section>
+
+				<section className={styles.analysisSection}>
+					<article className={`${styles.card} ${styles.analysisCard}`}>
+						<header className={styles.cardHeader}>
+							<div>
+								<h2 className={styles.cardTitle}>分析ハイライト</h2>
+								<p className={styles.cardSubtitle}>
+									記録データの傾向をふりかえり、習慣化の手応えを確認しましょう。
+								</p>
+							</div>
+							<button type="button" className={styles.ghostButton}>
+								詳細を見る
+							</button>
+						</header>
+
+						<div className={styles.statsGrid}>
+							{mockStats.map((stat) => (
+								<div key={stat.label} className={styles.statCard}>
+									<p className={styles.statLabel}>{stat.label}</p>
+									<p className={styles.statValue}>{stat.value}</p>
+									<p className={styles.statTrend}>{stat.trend}</p>
+								</div>
+							))}
+						</div>
+					</article>
 				</section>
 			</main>
 		</div>
