@@ -240,7 +240,7 @@ export default function DashboardPage() {
 								<h2 className={styles.cardTitle}>今日の煩悩</h2>
 							</div>
 							<button type="button" className={styles.ghostButton}>
-								これまでの煩悩を見る
+								過去の煩悩を見る
 							</button>
 						</header>
 
@@ -263,7 +263,7 @@ export default function DashboardPage() {
 						<header className={styles.cardHeader}>
 							<h2 className={styles.cardTitle}>アクション</h2>
 							<button type="button" className={styles.ghostButton}>
-								これまでのアクションを見る
+								過去のアクションを見る
 							</button>
 						</header>
 						<ul className={styles.actionList}>
@@ -280,9 +280,14 @@ export default function DashboardPage() {
 
 				<section className={styles.secondaryGrid}>
 					<div className={styles.card}>
-						<h2 className={styles.cardTitle}>日次振り返り: 感謝ログ</h2>
+						<header className={styles.cardHeader}>
+							<h2 className={styles.cardTitle}>日次振り返り</h2>
+							<button type="button" className={styles.ghostButton}>
+								過去の記録を見る
+							</button>
+						</header>
 						<p className={styles.helperText}>
-							1日の終わりに「ありがたい出来事」を3つ記録して、余韻を味わいましょう。
+							1日の終わりによかったことや感謝すべきことを記録して（3つが目安）、余韻を味わいましょう。
 						</p>
 						<ul className={styles.gratitudeList}>
 							{gratitudeItems.map((item) => (
@@ -292,19 +297,13 @@ export default function DashboardPage() {
 								>
 									<div>
 										<p className={styles.gratitudeText}>{item.text}</p>
-										<span className={styles.gratitudeMeta}>
-											{item.moment}・記録 {item.loggedAt}
-										</span>
 									</div>
-									<button type="button" className={styles.tagButton}>
-										タグ整理
-									</button>
 								</li>
 							))}
 						</ul>
 						<form className={styles.entryForm}>
 							<label htmlFor="gratitude" className={styles.formLabel}>
-								感謝を追加
+								振り返りを追加
 							</label>
 							<input
 								type="text"
@@ -314,9 +313,6 @@ export default function DashboardPage() {
 							<div className={styles.formActions}>
 								<button type="submit" className={styles.primaryButton}>
 									登録する
-								</button>
-								<button type="button" className={styles.secondaryButton}>
-									過去の記録を見る
 								</button>
 							</div>
 						</form>
