@@ -77,9 +77,9 @@ const gratitudeItems = [
 ];
 
 const upcomingActions = [
-	{ title: "昼食後に散歩10分", time: "12:30", tag: "リフレッシュ" },
-	{ title: "午後の集中ブロック", time: "14:00", tag: "集中" },
-	{ title: "夜の瞑想30分", time: "21:30", tag: "マインドフル" },
+	{ title: "昼食後に散歩10分" },
+	{ title: "午後の集中ブロック" },
+	{ title: "夜の瞑想30分" },
 ];
 
 const personalQuotes = [
@@ -237,13 +237,10 @@ export default function DashboardPage() {
 					<div className={styles.card}>
 						<header className={styles.cardHeader}>
 							<div>
-								<h2 className={styles.cardTitle}>最新の煩悩ログ</h2>
-								<p className={styles.cardSubtitle}>
-									アクションの効果を確認しましょう
-								</p>
+								<h2 className={styles.cardTitle}>今日の煩悩</h2>
 							</div>
 							<button type="button" className={styles.ghostButton}>
-								すべて表示
+								これまでの煩悩を見る
 							</button>
 						</header>
 
@@ -252,7 +249,6 @@ export default function DashboardPage() {
 								<article key={item.title} className={styles.bonnouItem}>
 									<div className={styles.bonnouMeta}>
 										<h3 className={styles.bonnouTitle}>{item.title}</h3>
-										<span>更新 {item.updatedAt}</span>
 									</div>
 									<p className={styles.bonnouScore}>スコア: {item.score}</p>
 									<p className={styles.bonnouAction}>
@@ -263,58 +259,11 @@ export default function DashboardPage() {
 						</div>
 					</div>
 
-					<div className={styles.sideColumn}>
-						<div className={styles.card}>
-							<h2 className={styles.cardTitle}>日次振り返り: 感謝ログ</h2>
-							<p className={styles.helperText}>
-								1日の終わりに「ありがたい出来事」を3つ記録して、余韻を味わいましょう。
-							</p>
-							<ul className={styles.gratitudeList}>
-								{gratitudeItems.map((item) => (
-									<li
-										key={`${item.text}-${item.loggedAt}`}
-										className={styles.gratitudeItem}
-									>
-										<div>
-											<p className={styles.gratitudeText}>{item.text}</p>
-											<span className={styles.gratitudeMeta}>
-												{item.moment}・記録 {item.loggedAt}
-											</span>
-										</div>
-										<button type="button" className={styles.tagButton}>
-											タグ整理
-										</button>
-									</li>
-								))}
-							</ul>
-							<form className={styles.entryForm}>
-								<label htmlFor="gratitude" className={styles.formLabel}>
-									感謝を追加
-								</label>
-								<input
-									type="text"
-									className={styles.input}
-									placeholder="例: 家族との朝ごはんが楽しかった"
-								/>
-								<div className={styles.formActions}>
-									<button type="submit" className={styles.primaryButton}>
-										登録する
-									</button>
-									<button type="button" className={styles.secondaryButton}>
-										過去の記録を見る
-									</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</section>
-
-				<section className={styles.secondaryGrid}>
 					<div className={styles.card}>
 						<header className={styles.cardHeader}>
-							<h2 className={styles.cardTitle}>アクション予定</h2>
+							<h2 className={styles.cardTitle}>アクション</h2>
 							<button type="button" className={styles.ghostButton}>
-								アクションを追加
+								これまでのアクションを見る
 							</button>
 						</header>
 						<ul className={styles.actionList}>
@@ -322,12 +271,55 @@ export default function DashboardPage() {
 								<li key={action.title} className={styles.actionItem}>
 									<div>
 										<p className={styles.actionTitle}>{action.title}</p>
-										<p className={styles.actionTag}>タグ: {action.tag}</p>
 									</div>
-									<span className={styles.timeBadge}>{action.time}</span>
 								</li>
 							))}
 						</ul>
+					</div>
+				</section>
+
+				<section className={styles.secondaryGrid}>
+					<div className={styles.card}>
+						<h2 className={styles.cardTitle}>日次振り返り: 感謝ログ</h2>
+						<p className={styles.helperText}>
+							1日の終わりに「ありがたい出来事」を3つ記録して、余韻を味わいましょう。
+						</p>
+						<ul className={styles.gratitudeList}>
+							{gratitudeItems.map((item) => (
+								<li
+									key={`${item.text}-${item.loggedAt}`}
+									className={styles.gratitudeItem}
+								>
+									<div>
+										<p className={styles.gratitudeText}>{item.text}</p>
+										<span className={styles.gratitudeMeta}>
+											{item.moment}・記録 {item.loggedAt}
+										</span>
+									</div>
+									<button type="button" className={styles.tagButton}>
+										タグ整理
+									</button>
+								</li>
+							))}
+						</ul>
+						<form className={styles.entryForm}>
+							<label htmlFor="gratitude" className={styles.formLabel}>
+								感謝を追加
+							</label>
+							<input
+								type="text"
+								className={styles.input}
+								placeholder="例: 家族との朝ごはんが楽しかった"
+							/>
+							<div className={styles.formActions}>
+								<button type="submit" className={styles.primaryButton}>
+									登録する
+								</button>
+								<button type="button" className={styles.secondaryButton}>
+									過去の記録を見る
+								</button>
+							</div>
+						</form>
 					</div>
 
 					<div className={styles.card}>
