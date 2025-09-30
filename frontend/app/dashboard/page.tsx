@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Header from "@/components/Header";
 import styles from "./Dashboard.module.css";
 
@@ -34,6 +37,12 @@ const personalMotto = {
 		"夜の振り返りで再読する",
 	],
 };
+
+const initialDailyMetrics = {
+	moodScore: "",
+};
+
+const moodOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 const dailyStartPrompts = [
 	"自己肯定感を高める自己イメージやその日の意気込みを記録",
@@ -98,6 +107,12 @@ const curatedQuotes = [
 ];
 
 export default function DashboardPage() {
+	const [dailyMetrics, setDailyMetrics] = useState(initialDailyMetrics);
+
+	const handleMoodSelect = (value: string) => {
+		setDailyMetrics({ moodScore: value });
+	};
+
 	return (
 		<div className={styles.container}>
 			<Header />
@@ -157,8 +172,40 @@ export default function DashboardPage() {
 									長期目標と座右の銘から得たエネルギーを言葉に落とし込みましょう。
 								</p>
 							</div>
-							<span className={styles.helperText}>最終更新 09:02</span>
 						</header>
+						<div className={styles.metricSelector}>
+							<span className={styles.metricLabel}>気分スコア</span>
+							<div className={styles.metricButtonGroup}>
+								{moodOptions.map((option) => {
+									const isSelected = dailyMetrics.moodScore === option;
+									return (
+										<button
+											type="button"
+											key={option}
+											className={`${styles.metricButton} ${isSelected ? styles.metricButtonSelected : ""}`}
+											onClick={() => handleMoodSelect(option)}
+											aria-pressed={isSelected}
+										>
+											{option}
+										</button>
+									);
+								})}
+								{dailyMetrics.moodScore && (
+									<button
+										type="button"
+										className={styles.metricClearButton}
+										onClick={() => handleMoodSelect("")}
+									>
+										クリア
+									</button>
+								)}
+							</div>
+							{dailyMetrics.moodScore && (
+								<p className={styles.metricSummary}>
+									選択中: {dailyMetrics.moodScore} / 10
+								</p>
+							)}
+						</div>
 						<form className={styles.entryForm}>
 							<label htmlFor="daily-comment" className={styles.formLabel}>
 								今日のひとこと
@@ -171,10 +218,7 @@ export default function DashboardPage() {
 							/>
 							<div className={styles.formActions}>
 								<button type="submit" className={styles.primaryButton}>
-									コメントを登録
-								</button>
-								<button type="button" className={styles.secondaryButton}>
-									テンプレートを見る
+									コメントを保存
 								</button>
 							</div>
 						</form>
@@ -220,23 +264,6 @@ export default function DashboardPage() {
 					</div>
 
 					<div className={styles.sideColumn}>
-						<div className={styles.card}>
-							<h2 className={styles.cardTitle}>今日の自己イメージ</h2>
-							<p className={styles.gradientNote}>
-								「集中力に自信がある自分として、午前中のコアタスクをやり切る」
-							</p>
-							<dl className={styles.metricList}>
-								<div className={styles.metricRow}>
-									<dt>気分スコア</dt>
-									<dd className={styles.metricValue}>7 / 10</dd>
-								</div>
-								<div className={styles.metricRow}>
-									<dt>自己肯定感</dt>
-									<dd className={styles.metricValue}>前日より +1.2</dd>
-								</div>
-							</dl>
-						</div>
-
 						<div className={styles.card}>
 							<h2 className={styles.cardTitle}>日次振り返り: 感謝ログ</h2>
 							<p className={styles.helperText}>
