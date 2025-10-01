@@ -1,19 +1,73 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./Header.module.css";
 
-const navItems = [
-	{ label: "ホーム", href: "/" },
-	{ label: "機能", href: "/features" },
-	{ label: "料金", href: "/pricing" },
-	{ label: "お問い合わせ", href: "/contact" },
+const primaryNavItems = [
+	{ label: "ダッシュボード", href: "#" },
+	{ label: "デイリースタート", href: "#" },
+	{ label: "日次振り返り", href: "#" },
 ];
+
+const secondaryNavItems = [
+	{ label: "煩悩", href: "#" },
+	{ label: "アクション", href: "#" },
+	{ label: "名言ライブラリ", href: "#" },
+];
+
+const mockUser = {
+	name: "久光 遼平",
+	email: "hikari@example.com",
+};
 
 const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMoreOpen, setIsMoreOpen] = useState(false);
+	const [isUserOpen, setIsUserOpen] = useState(false);
+	const moreMenuRef = useRef<HTMLDivElement | null>(null);
+	const userMenuRef = useRef<HTMLDivElement | null>(null);
+
+	useEffect(() => {
+		if (!isMoreOpen && !isUserOpen) {
+			return;
+		}
+
+		const handleClickOutside = (event: MouseEvent) => {
+			const target = event.target as Node;
+			if (
+				isMoreOpen &&
+				moreMenuRef.current &&
+				!moreMenuRef.current.contains(target)
+			) {
+				setIsMoreOpen(false);
+			}
+
+			if (
+				isUserOpen &&
+				userMenuRef.current &&
+				!userMenuRef.current.contains(target)
+			) {
+				setIsUserOpen(false);
+			}
+		};
+
+		const handleEscape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				setIsMoreOpen(false);
+				setIsUserOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("keydown", handleEscape);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("keydown", handleEscape);
+		};
+	}, [isMoreOpen, isUserOpen]);
 
 	return (
 		<header className={styles.header}>
@@ -24,14 +78,77 @@ const Header = () => {
 				</Link>
 
 				<div className={styles.desktopNav}>
-					{navItems.map((item) => (
-						<Link key={item.href} href={item.href} className={styles.navLink}>
+					{primaryNavItems.map((item) => (
+						<Link key={item.label} href={item.href} className={styles.navLink}>
 							{item.label}
 						</Link>
 					))}
-					<Link href="/signup" className={styles.ctaButton}>
-						今すぐ始める
-					</Link>
+					<div ref={moreMenuRef} className={styles.moreMenuWrapper}>
+						<button
+							type="button"
+							className={styles.moreMenuButton}
+							onClick={() => {
+								setIsUserOpen(false);
+								setIsMoreOpen((prev) => !prev);
+							}}
+							aria-haspopup="true"
+							aria-expanded={isMoreOpen}
+						>
+							その他
+							<span className={styles.moreCaret}>▾</span>
+						</button>
+						{isMoreOpen ? (
+							<div className={styles.moreMenuDropdown}>
+								{secondaryNavItems.map((item) => (
+									<Link
+										key={item.label}
+										href={item.href}
+										className={styles.moreMenuLink}
+									>
+										{item.label}
+									</Link>
+								))}
+							</div>
+						) : null}
+					</div>
+					<div ref={userMenuRef} className={styles.userMenuWrapper}>
+						<button
+							type="button"
+							className={styles.userBlock}
+							onClick={() => {
+								setIsMoreOpen(false);
+								setIsUserOpen((prev) => !prev);
+							}}
+							aria-haspopup="true"
+							aria-expanded={isUserOpen}
+						>
+							<div className={styles.userAvatar}>
+								{mockUser.name.slice(0, 2)}
+							</div>
+						</button>
+						{isUserOpen ? (
+							<div className={styles.userMenuDropdown}>
+								<div className={styles.userMeta}>
+									<p className={styles.userMetaName}>{mockUser.name}</p>
+									<p className={styles.userMetaEmail}>{mockUser.email}</p>
+								</div>
+								<Link
+									href="#"
+									className={styles.userMenuLink}
+									onClick={() => setIsUserOpen(false)}
+								>
+									設定
+								</Link>
+								<button
+									type="button"
+									className={styles.userMenuLogout}
+									onClick={() => setIsUserOpen(false)}
+								>
+									ログアウト
+								</button>
+							</div>
+						) : null}
+					</div>
 				</div>
 
 				<button
@@ -39,7 +156,11 @@ const Header = () => {
 					className={styles.menuButton}
 					aria-label="メニューを開閉"
 					aria-expanded={isMenuOpen}
-					onClick={() => setIsMenuOpen((prev) => !prev)}
+					onClick={() => {
+						setIsMoreOpen(false);
+						setIsUserOpen(false);
+						setIsMenuOpen((prev) => !prev);
+					}}
 				>
 					{/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 					<svg
@@ -62,10 +183,19 @@ const Header = () => {
 
 			{isMenuOpen ? (
 				<div className={`${styles.mobileMenu}`}>
+					<div className={styles.mobileUserBlock}>
+						<div className={styles.mobileUserAvatar}>
+							{mockUser.name.slice(0, 2)}
+						</div>
+						<div>
+							<p className={styles.mobileUserName}>{mockUser.name}</p>
+							<p className={styles.mobileUserEmail}>{mockUser.email}</p>
+						</div>
+					</div>
 					<div className={styles.mobileLinks}>
-						{navItems.map((item) => (
+						{primaryNavItems.map((item) => (
 							<Link
-								key={item.href}
+								key={item.label}
 								href={item.href}
 								className={styles.mobileNavLink}
 								onClick={() => setIsMenuOpen(false)}
@@ -73,9 +203,17 @@ const Header = () => {
 								{item.label}
 							</Link>
 						))}
-						<Link href="/signup" className={styles.mobileCta} onClick={() => setIsMenuOpen(false)}>
-							今すぐ始める
-						</Link>
+						<div className={styles.mobileSectionLabel}>その他</div>
+						{secondaryNavItems.map((item) => (
+							<Link
+								key={item.label}
+								href={item.href}
+								className={styles.mobileNavLink}
+								onClick={() => setIsMenuOpen(false)}
+							>
+								{item.label}
+							</Link>
+						))}
 					</div>
 				</div>
 			) : null}
