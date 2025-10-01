@@ -12,7 +12,7 @@ const today = new Date().toLocaleDateString("ja-JP", {
 });
 
 const mockStats = [
-	{ label: "デイリースタート記録", value: "15日連続", trend: "+2日" },
+	{ label: "朝の開始メモ記録", value: "15日連続", trend: "+2日" },
 	{ label: "平均気分スコア", value: "7.8 / 10", trend: "先週比 +0.6" },
 	{ label: "煩悩ログ", value: "4件", trend: "本日 +1" },
 	{ label: "アクション成功率", value: "68%", trend: "過去7日" },
@@ -20,22 +20,19 @@ const mockStats = [
 
 const longTermGoals = [
 	{
-		vision: "2025年12月までに『集中できる自分』を体現する",
+		vision: "業界トップ5%のエンジニアになる",
 		pillars: [
-			"朝活のスタート時間を毎日固定する",
-			"集中ブロック前の3分儀式を整える",
-			"1日の終わりに『できたこと』を3つ記録する",
+			"毎日1つずつできることを増やす",
+			"常に笑顔で+2度を意識して周囲に良い影響を与える",
+			"一歩先のことを常に考える",
 		],
 	},
 ];
 
 const personalMotto = {
-	text: "できた理由を書き出すことで『できる自分』を証明できる",
-	dailyReminders: [
-		"今日の『できた』を1行メモ",
-		"根拠になる行動をセットで書く",
-		"夜の振り返りで再読する",
-	],
+	text: "虚心坦懐",
+	description:
+		"先入観を持たず、広く平らな心。また、そうした心で物事に臨む態度。",
 };
 
 const initialDailyMetrics = {
@@ -46,7 +43,7 @@ const moodOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 const dailyStartPrompts = [
 	"自己肯定感を高める自己イメージやその日の意気込みを記録しましょう",
-	"実現したい状態を一言で表してみましょう",
+	"1日の終わりに実現したい状態を言語化してみましょう",
 ];
 
 const reflectionHints = [
@@ -125,7 +122,7 @@ export default function DashboardPage() {
 				<section className={styles.hero}>
 					<h1 className={styles.heroTitle}>{today}のダッシュボード</h1>
 					<p className={styles.heroCopy}>
-						長期目標と座右の銘を確認して、今日のデイリースタートコメントにつなげましょう。
+						長期目標と座右の銘を確認して、今日の朝の開始メモにつなげましょう。
 					</p>
 				</section>
 
@@ -165,6 +162,9 @@ export default function DashboardPage() {
 							</button>
 						</header>
 						<p className={styles.mottoQuote}>{personalMotto.text}</p>
+						<p className={styles.mottoDescription}>
+							{personalMotto.description}
+						</p>
 					</article>
 				</section>
 
@@ -172,7 +172,7 @@ export default function DashboardPage() {
 					<article className={`${styles.card} ${styles.dailyStartCard}`}>
 						<header className={styles.cardHeader}>
 							<div>
-								<h2 className={styles.cardTitle}>デイリースタートコメント</h2>
+								<h2 className={styles.cardTitle}>朝の開始メモ</h2>
 								<p className={styles.cardSubtitle}>
 									長期目標と座右の銘から得たエネルギーを言葉に落とし込みましょう。
 								</p>
@@ -226,7 +226,7 @@ export default function DashboardPage() {
 							<textarea
 								name="daily-comment"
 								className={styles.textarea}
-								placeholder="例: 『集中力に自信がある自分で、午前中のコアタスクをやり切る』"
+								placeholder="例: 『集中力と自信がある自分で、コアタスクをやり切る』"
 								rows={4}
 							/>
 							<div className={styles.formActions}>
@@ -389,9 +389,6 @@ export default function DashboardPage() {
 									記録データの傾向をふりかえり、習慣化の手応えを確認しましょう。
 								</p>
 							</div>
-							<button type="button" className={styles.ghostButton}>
-								詳細を見る
-							</button>
 						</header>
 
 						<div className={styles.statsGrid}>

@@ -7,7 +7,7 @@ import styles from "./Header.module.css";
 
 const primaryNavItems = [
 	{ label: "ダッシュボード", href: "#" },
-	{ label: "デイリースタート", href: "#" },
+	{ label: "朝の開始メモ", href: "#" },
 	{ label: "日次振り返り", href: "#" },
 ];
 
