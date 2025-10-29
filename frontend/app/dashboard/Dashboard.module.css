@@ -17,7 +17,7 @@
 @media (min-width: 768px) {
 	.main {
 		gap: 2.5rem;
-		padding: 2rem;
+		padding: 2.5rem 2.25rem 3rem;
 	}
 }
 
@@ -28,14 +28,13 @@
 }
 
 .heroTitle {
-	font-size: 1.875rem;
+	font-size: 1.5rem;
 	font-weight: 600;
-	letter-spacing: -0.01em;
 }
 
 @media (min-width: 768px) {
 	.heroTitle {
-		font-size: 2.125rem;
+		font-size: 1.75rem;
 	}
 }
 
@@ -43,6 +42,228 @@
 	font-size: 0.95rem;
 	color: #4b5563;
 	max-width: 44rem;
+	line-height: 1.7;
+}
+
+.topGrid {
+	display: grid;
+	gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.topGrid {
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	}
+}
+
+.dailyStartSection {
+	display: flex;
+	flex-direction: column;
+}
+
+.card {
+	border-radius: 1.75rem;
+	background: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+	padding: 1.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.longTermCard {
+	gap: 1.5rem;
+	border: 1px solid rgba(209, 213, 219, 0.7);
+}
+
+.mottoCard {
+	border: 1px solid rgba(209, 213, 219, 0.7);
+}
+
+.dailyStartCard {
+	gap: 1.5rem;
+	border: 1px solid rgba(209, 213, 219, 0.7);
+}
+
+.cardHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.cardTitle {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: #111827;
+}
+
+.cardSubtitle {
+	margin-top: 0.2rem;
+	font-size: 0.85rem;
+	color: #6b7280;
+	line-height: 1.6;
+}
+
+.helperText {
+	font-size: 0.78rem;
+	color: #6b7280;
+	letter-spacing: 0.01em;
+}
+
+.secondaryButton {
+	border-radius: 9999px;
+	border: 1px solid rgba(209, 213, 219, 0.8);
+	padding: 0.45rem 1rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #374151;
+	background: rgba(255, 255, 255, 0.92);
+	backdrop-filter: blur(6px);
+	transition: all 0.2s ease;
+}
+
+.secondaryButton:hover {
+	border-color: rgba(156, 163, 175, 0.9);
+	color: #1f2937;
+	background: rgba(255, 255, 255, 1);
+}
+
+.primaryButton {
+	border-radius: 0.9rem;
+	border: none;
+	padding: 0.45rem 1.1rem;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #ffffff;
+	background: linear-gradient(135deg, #2563eb, #4f46e5);
+	box-shadow: 0 6px 14px rgba(79, 70, 229, 0.22);
+	cursor: pointer;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.primaryButton:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 18px rgba(79, 70, 229, 0.28);
+}
+
+.ghostButton {
+	border-radius: 9999px;
+	border: 1px solid #e5e7eb;
+	padding: 0.4rem 0.85rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+	background: transparent;
+	transition: all 0.2s ease;
+}
+
+.ghostButton:hover {
+	border-color: #d1d5db;
+	color: #111827;
+}
+
+.goalVision {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: #111827;
+	line-height: 1.7;
+}
+
+.goalList {
+	margin-top: 0.2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+}
+
+.goalItem {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6rem;
+	font-size: 0.9rem;
+	color: #374151;
+}
+
+.goalDot {
+	margin-top: 0.3rem;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 9999px;
+	background: #34d399;
+	flex: none;
+}
+
+.formLabel {
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #9ca3af;
+}
+
+.entryForm {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.input,
+.textarea {
+	width: 100%;
+	border-radius: 1.1rem;
+	border: 1px solid rgba(209, 213, 219, 0.8);
+	background: rgba(255, 255, 255, 0.95);
+	padding: 0.75rem 1rem;
+	font-size: 0.9rem;
+	color: #111827;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.input:focus,
+.textarea:focus {
+	outline: none;
+	border-color: #6366f1;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.textarea {
+	min-height: 7rem;
+	resize: vertical;
+	line-height: 1.6;
+}
+
+.formActions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+.mottoQuote {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: #111827;
+	line-height: 1.7;
+}
+
+.checkList {
+	margin-top: 0.4rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+}
+
+.checkItem {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6rem;
+	font-size: 0.85rem;
+	color: #4b5563;
 }
 
 .statsGrid {
@@ -93,54 +314,8 @@
 
 @media (min-width: 768px) {
 	.primaryGrid {
-		grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
-}
-
-.card {
-	border-radius: 1.75rem;
-	background: #ffffff;
-	border: 1px solid rgba(255, 255, 255, 0.7);
-	box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
-	padding: 1.75rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1.25rem;
-}
-
-.cardHeader {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
-}
-
-.cardTitle {
-	font-size: 1.05rem;
-	font-weight: 600;
-	color: #111827;
-}
-
-.cardSubtitle {
-	margin-top: 0.2rem;
-	font-size: 0.85rem;
-	color: #6b7280;
-}
-
-.ghostButton {
-	border-radius: 9999px;
-	border: 1px solid #e5e7eb;
-	padding: 0.4rem 0.85rem;
-	font-size: 0.85rem;
-	font-weight: 600;
-	color: #6b7280;
-	background: transparent;
-	transition: all 0.2s ease;
-}
-
-.ghostButton:hover {
-	border-color: #d1d5db;
-	color: #111827;
 }
 
 .bonnouList {
@@ -190,83 +365,106 @@
 	color: #1f2937;
 }
 
-.sideColumn {
-	display: flex;
-	flex-direction: column;
-	gap: 1.75rem;
-}
-
-.gradientNote {
+.metricSelector {
 	margin-top: 0.75rem;
-	border-radius: 1.5rem;
-	background: linear-gradient(
-		135deg,
-		rgba(219, 234, 254, 0.65),
-		#ffffff 50%,
-		rgba(199, 210, 254, 0.68)
-	);
-	padding: 1.2rem;
-	font-size: 0.92rem;
-	color: #374151;
-	line-height: 1.6;
-}
-
-.metricList {
-	margin-top: 1rem;
-	display: flex;
-	flex-direction: column;
-	gap: 0.6rem;
-	font-size: 0.9rem;
-	color: #4b5563;
-}
-
-.metricRow {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.metricValue {
-	font-weight: 600;
-	color: #111827;
-}
-
-.bulletList {
-	margin-top: 0.8rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
 
-.bulletItem {
+.metricButtonGroup {
 	display: flex;
-	gap: 0.6rem;
-	font-size: 0.9rem;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.metricButton {
+	border-radius: 0.75rem;
+	border: 1px solid rgba(209, 213, 219, 0.9);
+	background: #ffffff;
+	color: #1f2937;
+	font-size: 0.95rem;
+	font-weight: 600;
+	padding: 0.45rem 0.75rem;
+	min-width: 2.4rem;
+	text-align: center;
+	transition:
+		background 0.2s ease,
+		color 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.metricButton:hover {
+	border-color: #6366f1;
+}
+
+.metricButtonSelected {
+	background: linear-gradient(135deg, #2563eb, #4f46e5);
+	color: #ffffff;
+	border-color: transparent;
+	box-shadow: 0 6px 14px rgba(79, 70, 229, 0.22);
+}
+
+.metricClearButton {
+	border-radius: 0.75rem;
+	border: 1px solid rgba(209, 213, 219, 0.9);
+	background: rgba(248, 250, 252, 0.9);
+	color: #6b7280;
+	font-size: 0.85rem;
+	font-weight: 600;
+	padding: 0.35rem 0.7rem;
+	transition:
+		color 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.metricClearButton:hover {
+	border-color: rgba(148, 163, 184, 0.9);
+	color: #1f2937;
+}
+
+.metricSummary {
+	font-size: 0.8rem;
 	color: #4b5563;
 }
 
-.bulletDot {
-	margin-top: 0.35rem;
-	width: 0.5rem;
-	height: 0.5rem;
-	border-radius: 9999px;
-	background: #34d399;
-	flex: none;
+.metricLabel {
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #6b7280;
+}
+
+.gratitudeList {
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+}
+
+.gratitudeItem {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: flex-start;
+	border-radius: 1.4rem;
+	background: rgba(249, 250, 251, 0.85);
+	border: 1px solid rgba(229, 231, 235, 0.9);
+	padding: 1rem 1.25rem;
+}
+
+.gratitudeText {
+	font-weight: 600;
+	font-size: 0.9rem;
 }
 
 .secondaryGrid {
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
-	.secondaryGrid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-}
-
 .actionList {
-	margin-top: 1.2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.85rem;
@@ -290,33 +488,54 @@
 	color: #1f2937;
 }
 
-.actionTag {
-	font-size: 0.72rem;
+.quoteSection {
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	padding-top: 0.2rem;
+}
+
+.sectionLabel {
+	font-size: 0.78rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
 	color: #9ca3af;
 }
 
-.timeBadge {
-	border-radius: 9999px;
-	background: rgba(191, 219, 254, 0.65);
-	color: #2563eb;
-	font-size: 0.75rem;
-	font-weight: 700;
-	padding: 0.35rem 0.9rem;
-}
-
-.hintList {
-	margin-top: 1.1rem;
+.quoteList {
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
 }
 
-.hintItem {
-	border-radius: 1.5rem;
+.quoteItem {
+	border-radius: 1.3rem;
 	background: rgba(249, 250, 251, 0.85);
 	border: 1px solid rgba(229, 231, 235, 0.9);
-	padding: 1.1rem;
-	font-size: 0.9rem;
-	color: #4b5563;
-	line-height: 1.6;
+	padding: 1rem 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.quoteText {
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: #1f2937;
+	line-height: 1.7;
+}
+
+.quoteMeta {
+	font-size: 0.75rem;
+	color: #9ca3af;
+}
+
+.analysisSection {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.analysisCard {
+	gap: 1.5rem;
 }

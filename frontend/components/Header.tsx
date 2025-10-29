@@ -1,102 +1,224 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const navItems = [
-  { label: "ホーム", href: "/" },
-  { label: "機能", href: "/features" },
-  { label: "料金", href: "/pricing" },
-  { label: "お問い合わせ", href: "/contact" },
+import styles from "./Header.module.css";
+
+const primaryNavItems = [
+	{ label: "ダッシュボード", href: "#" },
+	{ label: "朝の開始メモ", href: "#" },
+	{ label: "日次振り返り", href: "#" },
 ];
 
+const secondaryNavItems = [
+	{ label: "煩悩", href: "#" },
+	{ label: "アクション", href: "#" },
+	{ label: "名言ライブラリ", href: "#" },
+];
+
+const mockUser = {
+	name: "久光 遼平",
+	email: "hikari@example.com",
+};
+
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMoreOpen, setIsMoreOpen] = useState(false);
+	const [isUserOpen, setIsUserOpen] = useState(false);
+	const moreMenuRef = useRef<HTMLDivElement | null>(null);
+	const userMenuRef = useRef<HTMLDivElement | null>(null);
 
-  return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-white/85 backdrop-blur-md shadow-sm dark:bg-neutral-950/75">
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-lg font-semibold tracking-tight sm:text-xl"
-        >
-          <span className="rounded-md bg-gradient-to-r from-emerald-400 via-blue-500 to-indigo-500 px-2 py-1 text-xs font-bold uppercase text-white sm:text-sm">
-            Bonnou
-          </span>
-          <span className="hidden text-neutral-800 dark:text-neutral-100 sm:inline">
-            Mindful Productivity
-          </span>
-        </Link>
+	useEffect(() => {
+		if (!isMoreOpen && !isUserOpen) {
+			return;
+		}
 
-        <div className="hidden items-center gap-10 md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            href="/signup"
-            className="rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:brightness-110"
-          >
-            今すぐ始める
-          </Link>
-        </div>
+		const handleClickOutside = (event: MouseEvent) => {
+			const target = event.target as Node;
+			if (
+				isMoreOpen &&
+				moreMenuRef.current &&
+				!moreMenuRef.current.contains(target)
+			) {
+				setIsMoreOpen(false);
+			}
 
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-700 transition hover:bg-neutral-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 md:hidden dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
-          aria-label="メニューを開閉"
-          aria-expanded={isMenuOpen}
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-        >
-          {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {isMenuOpen ? (
-              <path d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </nav>
+			if (
+				isUserOpen &&
+				userMenuRef.current &&
+				!userMenuRef.current.contains(target)
+			) {
+				setIsUserOpen(false);
+			}
+		};
 
-      {isMenuOpen ? (
-        <div className="border-t border-white/10 bg-white/95 px-4 pb-6 pt-4 shadow-inner dark:bg-neutral-950/95 md:hidden">
-          <div className="flex flex-col gap-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-base font-medium text-neutral-700 transition hover:text-neutral-900 dark:text-neutral-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              href="/signup"
-              className="rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:brightness-110"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              今すぐ始める
-            </Link>
-          </div>
-        </div>
-      ) : null}
-    </header>
-  );
+		const handleEscape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				setIsMoreOpen(false);
+				setIsUserOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("keydown", handleEscape);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("keydown", handleEscape);
+		};
+	}, [isMoreOpen, isUserOpen]);
+
+	return (
+		<header className={styles.header}>
+			<nav className={styles.nav}>
+				<Link href="/" className={styles.brand}>
+					<span className={styles.brandBadge}>Bonnou</span>
+					<span className={styles.tagline}>煩悩を成長に繋げる</span>
+				</Link>
+
+				<div className={styles.desktopNav}>
+					{primaryNavItems.map((item) => (
+						<Link key={item.label} href={item.href} className={styles.navLink}>
+							{item.label}
+						</Link>
+					))}
+					<div ref={moreMenuRef} className={styles.moreMenuWrapper}>
+						<button
+							type="button"
+							className={styles.moreMenuButton}
+							onClick={() => {
+								setIsUserOpen(false);
+								setIsMoreOpen((prev) => !prev);
+							}}
+							aria-haspopup="true"
+							aria-expanded={isMoreOpen}
+						>
+							その他
+							<span className={styles.moreCaret}>▾</span>
+						</button>
+						{isMoreOpen ? (
+							<div className={styles.moreMenuDropdown}>
+								{secondaryNavItems.map((item) => (
+									<Link
+										key={item.label}
+										href={item.href}
+										className={styles.moreMenuLink}
+									>
+										{item.label}
+									</Link>
+								))}
+							</div>
+						) : null}
+					</div>
+					<div ref={userMenuRef} className={styles.userMenuWrapper}>
+						<button
+							type="button"
+							className={styles.userBlock}
+							onClick={() => {
+								setIsMoreOpen(false);
+								setIsUserOpen((prev) => !prev);
+							}}
+							aria-haspopup="true"
+							aria-expanded={isUserOpen}
+						>
+							<div className={styles.userAvatar}>
+								{mockUser.name.slice(0, 2)}
+							</div>
+						</button>
+						{isUserOpen ? (
+							<div className={styles.userMenuDropdown}>
+								<div className={styles.userMeta}>
+									<p className={styles.userMetaName}>{mockUser.name}</p>
+									<p className={styles.userMetaEmail}>{mockUser.email}</p>
+								</div>
+								<Link
+									href="#"
+									className={styles.userMenuLink}
+									onClick={() => setIsUserOpen(false)}
+								>
+									設定
+								</Link>
+								<button
+									type="button"
+									className={styles.userMenuLogout}
+									onClick={() => setIsUserOpen(false)}
+								>
+									ログアウト
+								</button>
+							</div>
+						) : null}
+					</div>
+				</div>
+
+				<button
+					type="button"
+					className={styles.menuButton}
+					aria-label="メニューを開閉"
+					aria-expanded={isMenuOpen}
+					onClick={() => {
+						setIsMoreOpen(false);
+						setIsUserOpen(false);
+						setIsMenuOpen((prev) => !prev);
+					}}
+				>
+					{/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+					<svg
+						className={styles.menuIcon}
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.5"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					>
+						{isMenuOpen ? (
+							<path d="M6 18L18 6M6 6l12 12" />
+						) : (
+							<path d="M4 6h16M4 12h16M4 18h16" />
+						)}
+					</svg>
+				</button>
+			</nav>
+
+			{isMenuOpen ? (
+				<div className={`${styles.mobileMenu}`}>
+					<div className={styles.mobileUserBlock}>
+						<div className={styles.mobileUserAvatar}>
+							{mockUser.name.slice(0, 2)}
+						</div>
+						<div>
+							<p className={styles.mobileUserName}>{mockUser.name}</p>
+							<p className={styles.mobileUserEmail}>{mockUser.email}</p>
+						</div>
+					</div>
+					<div className={styles.mobileLinks}>
+						{primaryNavItems.map((item) => (
+							<Link
+								key={item.label}
+								href={item.href}
+								className={styles.mobileNavLink}
+								onClick={() => setIsMenuOpen(false)}
+							>
+								{item.label}
+							</Link>
+						))}
+						<div className={styles.mobileSectionLabel}>その他</div>
+						{secondaryNavItems.map((item) => (
+							<Link
+								key={item.label}
+								href={item.href}
+								className={styles.mobileNavLink}
+								onClick={() => setIsMenuOpen(false)}
+							>
+								{item.label}
+							</Link>
+						))}
+					</div>
+				</div>
+			) : null}
+		</header>
+	);
 };
 
 export default Header;
